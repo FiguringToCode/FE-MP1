@@ -1,15 +1,16 @@
 import {Link, useParams} from 'react-router-dom'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import ProductContext from '../ProductContext'
 import { PriceRangeBar } from '../components/PriceRange'
 import { StarIcon, HeartIcon } from 'lucide-react'
-import { CartPage } from './CartPage'
+
 
 export const ProductListing = () => {
     const [selectedRange, setSelectedRange] = useState("")
     const [ratingStar, setRatingStar] = useState("")
+    const [displayList, setDisplayList] = useState([])
     
     const priceOptions = [
         { id: "low", label: "Low", description: "Budget-friendly", range: "₹0-₹30,000" },
@@ -18,30 +19,39 @@ export const ProductListing = () => {
     ]
 
     const {productId} = useParams()
-    const {category, loading} = useContext(ProductContext)
+    const {category, loading, addToCart, addToWishlist, cartBtn, wishlist} = useContext(ProductContext)
     
     const productData = category?.find((prod) => prod._id == productId)
     // console.log(productData)
-    
-    const FilteredProduct = productData.products
+
+    const filteredProduct = productData.products
     ?.filter(product => selectedRange == 'low' ? product.price < 30000 : selectedRange == 'medium' ? product.price >= 30000 && product.price < 80000 : selectedRange == 'high' ? product.price >= 80000 : true)
     ?.filter(product => ratingStar === '4' ? product.rating >= 4 : ratingStar === '3' ? product.rating >= 3 && product.rating < 4 : true)
-    // console.log(FilteredProduct)
 
-    const [cartBtn, setCartBtn] = useState(FilteredProduct)
+    useEffect(() => {
+        if(selectedRange || ratingStar){
+            setDisplayList(filteredProduct)
+        }
+    }, [selectedRange, ratingStar, productData])    
+
+
+    useEffect(() => {
+        if(cartBtn){
+            setDisplayList(cartBtn)
+        }
+    }, [cartBtn])
     
-    const addToCart = (productId) => {
-        const updatedCartItems = cartBtn.map(item => {
-            if(item._id == productId){
-                return {...item, isAdded: !item.isAdded}
-            }
-            else {
-                return item
-            }
-        })
-        setCartBtn(updatedCartItems)
-    }
-    
+
+    useEffect(() => {
+        if(wishlist){
+            setDisplayList(wishlist)
+        }
+    }, [wishlist])
+
+    console.log(filteredProduct)
+    console.log(cartBtn)
+    console.log(wishlist)
+      
     
 
     return (
@@ -86,7 +96,7 @@ export const ProductListing = () => {
                             <h3>Showing All Products <span className='fs-5 fw-lighter'>(Showing {productData.products.length} products)</span></h3>
                             <div className='row'>
                                 {
-                                    cartBtn ? cartBtn.map((item => (
+                                    displayList && displayList.length > 0 ? displayList.map((item => (
                                         <div key={item._id} className="card my-3 mx-1 py-2" style={{"maxWidth": "540px"}}>
                                             <div className="row g-0">
                                                 <div className="col-md-4">
@@ -103,7 +113,7 @@ export const ProductListing = () => {
                                                         <button onClick={() => addToCart(item._id)} className={item.isAdded ? `btn btn-primary px-4` : `btn btn-secondary px-4`}>{item.isAdded ? 'Added to Cart' : 'Add to Cart'}</button>
                                                     </div>
                                                     <div>
-                                                        <button onClick={() => addToCart(item._id)} className={item.isAdded ?  'btn btn-danger' : 'btn btn-success'}><HeartIcon /></button>
+                                                        <button onClick={() => addToWishlist(item._id)} className={item.isAdded ?  'btn btn-danger' : 'btn btn-success'}><HeartIcon /></button>
                                                     </div>
                                                 </div>
                                                 </div>
