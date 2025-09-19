@@ -48,7 +48,7 @@ export const CartPage = () => {
                                 My Cart ({cartBtn.length})
                             </h1>
                             {cartProducts.length === 0 ? (
-                                <img src='/img2.png' className='img-fluid' />
+                                <img src='/img2.png' className='img-fluid' /> || <p className="text-info display-4 fw-semibold">No product was added.</p>
                             ) : (
                                 <div className="row my-5">
                                     {cartProducts.map(data => (
