@@ -1,47 +1,65 @@
-import { createContext, useEffect, useState } from "react";
-import useFetch from './useFetch'
+import { createContext } from "react";
+import useFetch from "./useFetch";
+import { useState } from "react";
 
 const ProductContext = createContext();
 export default ProductContext;
 
 export const ProductProvider = ({ children }) => {
-  const { data: category = [], loading, error } = useFetch("https://be-mp-1.vercel.app/category");
+  const { data: category = [], loading, error } = useFetch(
+    "https://be-mp-1.vercel.app/category"
+  );
 
-  // Safely extract all products
   const globalProducts = Array.isArray(category)
-    ? category.flatMap(cat => cat.products || [])
+    ? category.flatMap((cat) => cat.products || [])
     : [];
 
-    // console.log(globalProducts)
 
-    const [wishlist, setWishlist] = useState(globalProducts)
-    const addToWishlist = (productId) => {
-        const updatedWishItems = wishlist.map(item => {
-            if(item._id == productId){
-                return {...item, isAdded2: !item.isAdded2}
-            } 
-            else {
-                return item
-            }
-        })
-        setWishlist(updatedWishItems)
-    }
+  const [wishlist, setWishlist] = useState([]);
+  const [cartBtn, setCartBtn] = useState([]);
 
-    const [cartBtn, setCartBtn] = useState(globalProducts)
-    const addToCart = (productId) => {
-        const updatedCartItems = cartBtn.map(item => {
-            if(item._id == productId){
-                return {...item, isAdded: !item.isAdded}
-            }
-            else {
-                return item
-            }
-        })
-        setCartBtn(updatedCartItems)
-    }
+  const addToWishlist = (productId) => {
+    setWishlist((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId) // remove if already added
+        : [...prev, productId] // add if not present
+    );
+  };
+
+  const addToCart = (productId) => {
+    setCartBtn((prev) =>
+      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
+    );
+  };
+
+  const removeFromWishlist = (productId) => {
+    setWishlist((prev) => prev.filter(id => id !== productId));
+  };
+
+  const removeFromCart = (productId) => {
+    setCartBtn((prev) => prev.filter(id => id !== productId) )
+  }
+
+  const [quantity, setQuantity] = useState({})
+
 
   return (
-    <ProductContext.Provider value={{ category, wishlist, setWishlist, addToWishlist, cartBtn, setCartBtn, addToCart, loading, error }}>
+    <ProductContext.Provider
+      value={{
+        category,
+        globalProducts,
+        wishlist,
+        addToWishlist,
+        removeFromWishlist,
+        cartBtn,
+        addToCart,
+        removeFromCart,
+        quantity, 
+        setQuantity,
+        loading,
+        error,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

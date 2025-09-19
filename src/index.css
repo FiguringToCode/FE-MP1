@@ -88,3 +88,7 @@ button:focus-visible {
   transform: translateY(-12px) scale(1.05);
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2) !important;
 }
+
+.heading-Color {
+  color: #EF7722;
+}

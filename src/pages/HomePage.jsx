@@ -20,38 +20,28 @@ export const HomePage = () => {
                                             <p className="card-text text-center">{data.type}</p>
                                             <Link to={`/products/${data._id}`} className="stretched-link"></Link>
                                         </div>
-                                    </div>
+                                    </div>  
                                 </div>
                             )) : loading && (<div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                                <span className="visually-unhidden">Loading...</span>
                               </div>)}
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="container h-75 py-5">
-            <div id="carouselExampleAutoplaying" className="carousel slide carousel-height" data-bs-ride="carousel">
-            <div className="carousel-inner">
-                {
-                    category ? category.map((data) => (
-                        <div key={data._id} className="carousel-item active mh-75" data-bs-interval="2000">
-                            <img src={data.imgUrl} className="d-block w-100 object-fit-cover img-fluid" alt="..." />
-                        </div>
-                    )) : loading && (<div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                      </div>)
-                }
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
+            <section className="container">
+                <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
+                    <div className="carousel-inner">
+                        {
+                            category.map(data => (
+                                <div key={data._id} className="carousel-item active">
+                                    <img src={data.imgUrl} className="d-block w-100" alt="..." />
+                                </div>
+                            )) 
+                        }
+                    </div>
+                </div>
             </section>
         </div>
     )
