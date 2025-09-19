@@ -27,7 +27,7 @@ export const CartPage = () => {
     const cartProducts = Array.isArray(globalProducts)
         ? globalProducts.filter(prod => cartBtn.includes(prod._id))
         : []
-    console.log(cartProducts)
+    // console.log(cartProducts)
     
     const subtotal = cartProducts.reduce((sum, item) => sum + item.price * (quantity[item._id] ||  1), 0)
     const tax = subtotal * 0.05
@@ -48,7 +48,7 @@ export const CartPage = () => {
                                 My Cart ({cartBtn.length})
                             </h1>
                             {cartProducts.length === 0 ? (
-                                <img src='public\img2.png' className='img-fluid' />
+                                <img src='/img2.png' className='img-fluid' />
                             ) : (
                                 <div className="row my-5">
                                     {cartProducts.map(data => (
