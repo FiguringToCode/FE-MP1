@@ -34,7 +34,7 @@ export const HomePage = () => {
                 <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-inner">
                         {
-                            category.map(data => (
+                            category?.map(data => (
                                 <div key={data._id} className="carousel-item active">
                                     <img src={data.imgUrl} className="d-block w-100" alt="..." />
                                 </div>

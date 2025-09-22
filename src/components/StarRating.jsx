@@ -1,7 +1,6 @@
 import { Star } from "lucide-react"
 
 
-
 export function StarRating({ rating, maxRating = 5, size = "md", showValue = false, className }) {
   const clampedRating = Math.max(0, Math.min(rating, maxRating))
 

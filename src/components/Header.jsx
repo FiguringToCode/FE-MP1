@@ -1,5 +1,5 @@
 import {NavLink} from 'react-router-dom'
-import {Heart, ShoppingCartIcon} from 'lucide-react'
+import {Heart, ShoppingCartIcon, UserCircle2} from 'lucide-react'
 
 
 export const Header = () => {
@@ -14,10 +14,13 @@ export const Header = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul className="navbar-nav align-items-lg-center">
                             <li className="nav-item mx-lg-2 my-2 my-lg-0">
-                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/wishlist"><Heart size={20} /> <span className="d-none d-md-inline">Wishlist</span> </NavLink>
+                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/wishlist"><Heart size={20} className='me-2' /> Wishlist </NavLink>
                             </li>
                             <li className="nav-item mx-lg-2 my-2 my-lg-0">
-                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/cartpage"><ShoppingCartIcon size={20} /><span className="d-none d-md-inline">Cart</span></NavLink>
+                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/cartpage"><ShoppingCartIcon size={20} className='me-2' />Cart</NavLink>
+                            </li>
+                            <li className="nav-item mx-lg-2 my-2 my-lg-0">
+                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/user"><UserCircle2 size={20} className='me-2' />User Profile</NavLink>
                             </li>
                         </ul>
                     </div>
