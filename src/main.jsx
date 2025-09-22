@@ -10,7 +10,7 @@ import { ProductProvider } from './ProductContext.jsx'
 import { ProductDetails } from './pages/ProductDetails.jsx'
 import { Wishlist } from './pages/Wishlist.jsx'
 import { CartPage } from './pages/CartPage.jsx'
-import { UserProfile } from './pages/userProfile.jsx'
+import { UserProfile } from './pages/UserProfile.jsx'
  
 
 const router = createBrowserRouter([
