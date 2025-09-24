@@ -11,7 +11,7 @@ export function UserProfile() {
     <>
       <Header />
       {
-        address && address.map(address => (
+        address.length > 0 ? address.map(address => (
 
           <div
             className="container-fluid py-4 pages-bg"
@@ -110,7 +110,12 @@ export function UserProfile() {
           </div>
 
 
-        ))
+        )) : 
+
+        (<div className="container text-center">
+          <img src='/img3.png' className='img-fluid py-4 w-50' />
+        </div>
+        )
       }
       <Footer />
     </>
