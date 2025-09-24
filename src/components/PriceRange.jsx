@@ -58,14 +58,14 @@ export function PriceRangeBar({selectedRange, setSelectedRange, priceOptions}) {
       </div>
 
       {/* Selected info */}
-      <div className="alert alert-light border">
+      {/* <div className="alert alert-light border">
         <div className="d-flex justify-content-between align-items-center">
           <span className="small text-muted">Selected Range:</span>
           <span className="fw-semibold text-dark">
             {selectedOption?.label} ({selectedOption?.range})
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

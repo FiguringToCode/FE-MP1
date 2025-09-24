@@ -22,9 +22,11 @@ export const HomePage = () => {
                                         </div>
                                     </div>  
                                 </div>
-                            )) : loading && (<div className="spinner-border text-primary" role="status">
+                            )) : loading 
+                            && 
+                            <div className="spinner-border text-primary" role="status">
                                 <span className="visually-unhidden">Loading...</span>
-                              </div>)}
+                            </div>}
                         </div>
                     </div>
                 </div>

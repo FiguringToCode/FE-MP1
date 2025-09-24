@@ -24,8 +24,8 @@ export const ProductProvider = ({ children }) => {
   const addToWishlist = (productId) => {
     setWishlist((prev) =>
       prev.includes(productId)
-        ? (toast.success("Removed from Wish List"), prev.filter((id) => id !== productId)) // remove if already added
-        : (toast.success("Added to Wish List"), [...prev, productId]) // add if not present
+        ? (toast.success("Removed from Wishlist"), prev.filter((id) => id !== productId)) // remove if already added
+        : (toast.success("Added to Wishlist"), [...prev, productId]) // add if not present
     );
     toast.success("Added to Wishlist")
   };
