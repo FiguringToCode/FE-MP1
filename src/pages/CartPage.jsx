@@ -257,21 +257,29 @@ export const CartPage = () => {
                                     </label>
                                 </div>
 
-                                <button className="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center" onClick={handlePlaceOrder} disabled={isLoading}>
-                                    {isLoading ? (
-                                        <>
-                                            <div className="spinner-border spinner-border-sm me-2" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                            Processing...
-                                        </>
+                                {
+                                    total > 0 ? (
+                                        <button className="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center" onClick={handlePlaceOrder} disabled={isLoading}>
+                                            {isLoading ? (
+                                                <>
+                                                    <div className="spinner-border spinner-border-sm me-2" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div>
+                                                    Processing...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <i className="bi bi-bag-check me-2"></i>
+                                                    Place Order - ₹ {total.toFixed(2)}
+                                                </>
+                                            )}
+                                        </button>
                                     ) : (
-                                        <>
-                                            <i className="bi bi-bag-check me-2"></i>
-                                            Place Order - ₹ {total.toFixed(2)}
-                                        </>
-                                    )}
-                                </button>
+                                        <button className="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center">
+                                            Cannot Place Order
+                                        </button>
+                                    )
+                                }
 
                             </div>
                         </div>
