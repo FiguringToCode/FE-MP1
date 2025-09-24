@@ -3,18 +3,47 @@ import { Footer } from '../components/Footer'
 import { useContext, useState } from 'react'
 import { MinusSquare, PlusSquare } from 'lucide-react'
 import ProductContext from '../ProductContext'
+import { useLocalStorage } from '../useLocalStorage'
 
 export const CartPage = () => {
-    const { cartBtn, globalProducts, removeFromCart, quantity, setQuantity } = useContext(ProductContext)
-
-    const [name, setName] = useState('John Doe')
-    const [address, setAddress] = useState('123 Main Street, New York, NY 10001')
-    const [edit, setEdit] = useState(false)
+    const { cartBtn, setCartBtn, globalProducts, removeFromCart, quantity, setQuantity, addToWishlist, address, setAddress} = useContext(ProductContext)
+    
     const [isLoading, setIsLoading] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [selectedAddresses, setSelectedAddresses] = useState([])
+    
+    const [addrForm, setAddrForm] = useLocalStorage("addressForm", {
+        id: "",
+        name: "",
+        address: ""
+    })
 
-    const handleSave = (event) => {
-        event.preventDefault()
-        setEdit(false)
+    const handleAddressChange = (e) => {
+        const {name, value} = e.target
+
+        setAddrForm((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+
+    const handleAddressSubmit = (e) => {
+        e.preventDefault()
+
+        const newAddress = {
+            id: Date.now(),
+            name: addrForm.name,
+            address: addrForm.address
+        }
+
+        setAddress([...address, newAddress])
+        console.log("New address added: ", newAddress)
+        console.log(address)
+
+        setAddrForm({
+            name: "",
+            address: ""
+        })
     }
 
     const handlePlaceOrder = async () => {
@@ -22,6 +51,7 @@ export const CartPage = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000))
         setIsLoading(false)
         alert("Order Placed Successfully")
+        setCartBtn([])
     }
 
     const cartProducts = Array.isArray(globalProducts)
@@ -31,7 +61,7 @@ export const CartPage = () => {
     
     const subtotal = cartProducts.reduce((sum, item) => sum + item.price * (quantity[item._id] ||  1), 0)
     const tax = subtotal * 0.05
-    const shipping = 40
+    const shipping = subtotal === 0 ? 0 : 40
     const total = subtotal === 0 ? 0 : subtotal + shipping + tax
 
     return (
@@ -45,10 +75,10 @@ export const CartPage = () => {
 
                         <div className="col-12 col-md-10 col-lg-8">
                             <h1 className="display-5 fw-semibold heading-Color text-center pt-4">
-                                My Cart ({cartBtn.length})
+                                My Cart
                             </h1>
                             {cartProducts.length === 0 ? (
-                                <img src='/img2.png' className='img-fluid' /> || <p className="text-info display-4 fw-semibold">No product was added.</p>
+                                <img src='/img2.png' className='img-fluid py-4 mx-1' />
                             ) : (
                                 <div className="row my-5">
                                     {cartProducts.map(data => (
@@ -80,6 +110,12 @@ export const CartPage = () => {
                                                         className="btn btn-outline-danger w-100 mt-2"
                                                     >
                                                         Remove from Cart
+                                                    </button>
+                                                    <button
+                                                        onClick={() => addToWishlist(data._id)}
+                                                        className="btn btn-outline-primary w-100 mt-2"
+                                                    >
+                                                        Move from Cart
                                                     </button>
                                                 </div>
                                             </div>
@@ -148,40 +184,48 @@ export const CartPage = () => {
                                 </div>
 
                                 {/* Shipping Address */}
-                                <div className="mb-4 px-3">
-                                    <h6 className="fw-bold mb-2">
-                                        <i className="bi bi-geo-alt me-2"></i>
-                                        Shipping Address
-                                    </h6>
-                                    <div className="bg-light p-3 rounded">
+                                <div className='mb-4 px-3'>
+                                    {Array.isArray(address) && address.length === 0
+                                        ? (<p className='border border-subtle-dark border-2 p-2'>No address added.</p>)
+                                        : (address.map((addr) => (
+                                            <div key={addr.id} className='mb-3'>
+                                                <input type='checkbox' checked={selectedAddresses.includes(addr.id)} onChange={() => {
+                                                    if(selectedAddresses.includes(addr.id)){
+                                                      setSelectedAddresses(selectedAddresses.filter(id => id !== addr.id))  
+                                                    } else {
+                                                        setSelectedAddresses([...selectedAddresses, addr.id])
+                                                    }
+                                                }} />
+                                                <div>{addr.name}</div>
+                                                <div>{addr.address}</div>
+                                                <button className='btn btn-outline-danger' onClick={() => {
+                                                    setAddress(address.filter(addr => !selectedAddresses.includes(addr.id)))
+                                                    setSelectedAddresses([])
+                                                }} disabled={selectedAddresses.length === 0}>Delete Address</button>
+                                            </div>
+                                        )))
+                                    }
                                     {edit ? (
-                                        <form onSubmit={handleSave}>
-                                            <div className="mb-2">
-                                                <label className="fw-semibold">Name:</label>
-                                                <input type="text" className="form-control" value={name} onChange={e => setName(e.target.value)} required />
+                                        <form onSubmit={handleAddressSubmit}>
+                                            <div>
+                                                <label className='form-label'>Name: </label>
+                                                <input className='form-control' type='text' name='name' value={addrForm.name} onChange={handleAddressChange} />
                                             </div>
-                                            <div className="mb-2">
-                                                <label className="fw-semibold">Address:</label>
-                                                <input type="text" className="form-control" value={address} onChange={e => setAddress(e.target.value)} required />
+                                            <div>
+                                                <label className='form-label'>Address: </label>
+                                                <input className='form-control' type='text' name='address' value={addrForm.address} onChange={handleAddressChange} />
                                             </div>
-                                            <button type="submit" className="btn btn-primary btn-sm mt-2">Save</button>
+                                            <button className='btn btn-outline-success mt-3'>Save</button>
                                         </form>
-                                    ) : (
-                                        <>
-                                            <div className="fw-semibold">{name}</div>
-                                            <div>{address}</div>
-                                        </>
-                                    )}
-                                    </div>
-                                    <button onClick={() => setEdit(e => !e)} className="btn btn-outline-secondary btn-sm mt-2">
-                                        <i className="bi bi-pencil me-1"></i>
-                                        {edit ? 'Cancel' : 'Change Address'}
-                                    </button>
+                                    ) : null}
+
+                                    <button className='btn btn-outline-primary my-2' onClick={() => setEdit(!edit)}>{edit ? "Done" : "Add Address"}</button>
                                 </div>
+                                
 
                                 {/* Terms and Conditions */}
                                 <div className="form-check mb-4 px-5">
-                                    <input className="form-check-input" type="checkbox" id="termsCheck" defaultChecked />
+                                    <input className="form-check-input" type="checkbox" id="termsCheck" />
                                     <label className="form-check-label small" htmlFor="termsCheck">
                                         I agree to the{" "}
                                         <a href="#" className="text-decoration-none">

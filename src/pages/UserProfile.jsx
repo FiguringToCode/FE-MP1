@@ -38,7 +38,7 @@ export function UserProfile() {
           {/* Profile Header */}
           <div className="col-12 mb-4">
             <div className="card shadow-sm">
-              <div className="card-body text-center py-5">
+              <div className="card-body text-center py-5 pages-bg">
                 <div className="mb-3">
                   <img
                     src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
@@ -51,11 +51,11 @@ export function UserProfile() {
                   {userInfo.firstName} {userInfo.lastName}
                 </h2>
                 <p className="text-muted mb-3">{userInfo.email}</p>
-                <button className="btn btn-outline-primary me-2">
+                <button className="btn btn-outline-primary me-2 fw-bold">
                   <i className="bi bi-camera me-1"></i>
                   Change Photo
                 </button>
-                <button className="btn btn-primary" onClick={() => setIsEditing(!isEditing)}>
+                <button className="btn btn-outline-primary fw-bold" onClick={() => setIsEditing(!isEditing)}>
                   <i className="bi bi-pencil me-1"></i>
                   {isEditing ? "Cancel" : "Edit Profile"}
                 </button>
@@ -68,7 +68,7 @@ export function UserProfile() {
             {/* Personal Information */}
             <div className="card shadow-sm mb-4">
               <div className="card-header bg-white">
-                <h5 className="card-title mb-0">
+                <h5 className="card-title user-text-center fs-3 text-primary">
                   <i className="bi bi-person me-2"></i>
                   Personal Information
                 </h5>
@@ -76,59 +76,35 @@ export function UserProfile() {
               <div className="card-body">
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">First Name</label>
+                    <label className="form-label fs-5 fw-semibold">First Name : </label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="firstName"
-                        value={userInfo.firstName}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="firstName" value={userInfo.firstName} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.firstName}</p>
+                      <span className="mx-2 fs-5">{userInfo.firstName}</span>
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Last Name</label>
+                    <label className="form-label fs-5 fw-semibold">Last Name : </label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="lastName"
-                        value={userInfo.lastName}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="lastName" value={userInfo.lastName} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.lastName}</p>
+                      <span className="mx-2 fs-5">{userInfo.lastName}</span>
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Email</label>
+                    <label className="form-label fs-5 fw-semibold">Email</label>
                     {isEditing ? (
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        value={userInfo.email}
-                        onChange={handleInputChange}
-                      />
+                      <input type="email" className="form-control" name="email" value={userInfo.email} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.email}</p>
+                      <span className="mx-2 fs-5">{userInfo.email}</span>
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Phone</label>
+                    <label className="form-label fs-5 fw-semibold">Phone</label>
                     {isEditing ? (
-                      <input
-                        type="tel"
-                        className="form-control"
-                        name="phone"
-                        value={userInfo.phone}
-                        onChange={handleInputChange}
-                      />
+                      <input type="tel" className="form-control" name="phone" value={userInfo.phone} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.phone}</p>
+                      <span className="mx-2 fs-5">{userInfo.phone}</span>
                     )}
                   </div>
                 </div>
@@ -149,7 +125,7 @@ export function UserProfile() {
             {/* Address Information */}
             <div className="card shadow-sm mb-4">
               <div className="card-header bg-white">
-                <h5 className="card-title mb-0">
+                <h5 className="card-title user-text-center fs-3 text-primary">
                   <i className="bi bi-geo-alt me-2"></i>
                   Address Information
                 </h5>
@@ -157,59 +133,35 @@ export function UserProfile() {
               <div className="card-body">
                 <div className="row g-3">
                   <div className="col-12">
-                    <label className="form-label">Street Address</label>
+                    <label className="form-label fs-5 fw-semibold">Street Address</label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="address"
-                        value={userInfo.address}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="address" value={userInfo.address} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.address}</p>
+                      <span className="mx-2 fs-5">{userInfo.address}</span>
                     )}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">City</label>
+                    <label className="form-label fs-5 fw-semibold">City</label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="city"
-                        value={userInfo.city}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="city" value={userInfo.city} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.city}</p>
+                      <span className="fs-5 mx-2">{userInfo.city}</span>
                     )}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">State</label>
+                    <label className="form-label fs-5 fw-semibold">State</label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="state"
-                        value={userInfo.state}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="state" value={userInfo.state} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.state}</p>
+                      <span className="fs-5 mx-2">{userInfo.state}</span>
                     )}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">ZIP Code</label>
+                    <label className="form-label fs-5 fw-semibold">ZIP Code</label>
                     {isEditing ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="zipCode"
-                        value={userInfo.zipCode}
-                        onChange={handleInputChange}
-                      />
+                      <input type="text" className="form-control" name="zipCode" value={userInfo.zipCode} onChange={handleInputChange} />
                     ) : (
-                      <p className="form-control-plaintext">{userInfo.zipCode}</p>
+                      <span className="mx-2 fs-5">{userInfo.zipCode}</span>
                     )}
                   </div>
                 </div>

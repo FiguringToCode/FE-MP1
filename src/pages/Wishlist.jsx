@@ -1,6 +1,6 @@
 import { Header } from "../components/Header"
 import { Footer } from "../components/Footer"
-import { useContext, useState } from "react"
+import { useContext} from "react"
 import ProductContext from "../ProductContext"
 
 export const Wishlist = () => {
@@ -18,7 +18,8 @@ export const Wishlist = () => {
                     <h1 className="display-5 fw-semibold heading-Color text-center py-4">My Wishlist</h1>
                     <div className="row">
                         {
-                            wishedProducts.length === 0 ? <img src='/img1.png' className='img-fluid pb-5' /> || <p className="text-info display-4 fw-semibold">No product was added.</p> : wishedProducts.map(data => (
+                            wishedProducts.length === 0 ? <img src='/img1.png' className='img-fluid pb-5' /> 
+                            : wishedProducts.map(data => (
                                 <div key={data._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
                                     <div className="card w-100 h-100">
                                         <img src={data.productImg} className="card-img-top img-fluid" style={{ objectFit: 'cover', height: 220 }} alt="wishlistImages"/>

@@ -1,8 +1,12 @@
 import {NavLink} from 'react-router-dom'
 import {Heart, ShoppingCartIcon, UserCircle2} from 'lucide-react'
+import { useContext } from 'react'
+import ProductContext from '../ProductContext'
 
 
 export const Header = () => {
+    const {wishlist, cartBtn} = useContext(ProductContext)
+
     return (
         <>
             <nav className="navbar navbar-expand-lg nav-bg">
@@ -13,13 +17,28 @@ export const Header = () => {
                     </button>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul className="navbar-nav align-items-lg-center">
-                            <li className="nav-item mx-lg-2 my-2 my-lg-0">
-                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/wishlist"><Heart size={20} className='me-2' /> Wishlist </NavLink>
-                            </li>
-                            <li className="nav-item mx-lg-2 my-2 my-lg-0">
-                                <NavLink className="nav-link d-flex align-items-center gap-1" to="/cartpage"><ShoppingCartIcon size={20} className='me-2' />Cart</NavLink>
-                            </li>
-                            <li className="nav-item mx-lg-2 my-2 my-lg-0">
+
+                            <div className="position-relative">
+                                <li className="nav-item mx-lg-3 my-2 my-lg-0">
+                                    <NavLink className="nav-link d-flex align-items-center" to="/wishlist"><Heart size={20} className='me-2' /> Wishlist </NavLink>
+                                </li>
+                                <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
+                                    {wishlist.length}
+                                    <span className="visually-hidden">unread messages</span>
+                                </span>
+                            </div>
+
+                            <div className='position-relative'>
+                                <li className="nav-item mx-lg-3 my-2 my-lg-0">
+                                    <NavLink className="nav-link d-flex align-items-center gap-1" to="/cartpage"><ShoppingCartIcon size={20} className='me-2' />Cart</NavLink>
+                                </li>
+                                <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
+                                    <span className='text-center'>{cartBtn.length}</span>
+                                    <span className="visually-hidden">unread messages</span>
+                                </span>
+                            </div>
+
+                            <li className="nav-item mx-lg-3 my-2 my-lg-0">
                                 <NavLink className="nav-link d-flex align-items-center gap-1" to="/user"><UserCircle2 size={20} className='me-2' />User Profile</NavLink>
                             </li>
                         </ul>
