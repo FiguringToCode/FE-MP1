@@ -15,6 +15,8 @@ export const CartPage = () => {
     const [addrForm, setAddrForm] = useLocalStorage("addressForm", {
         id: "",
         name: "",
+        email: "",
+        phone: "",
         address: ""
     })
 
@@ -33,6 +35,8 @@ export const CartPage = () => {
         const newAddress = {
             id: Date.now(),
             name: addrForm.name,
+            email: addrForm.email,
+            phone: addrForm.phone,
             address: addrForm.address
         }
 
@@ -42,6 +46,8 @@ export const CartPage = () => {
 
         setAddrForm({
             name: "",
+            email: "",
+            phone: "",
             address: ""
         })
     }
@@ -115,7 +121,7 @@ export const CartPage = () => {
                                                         onClick={() => addToWishlist(data._id)}
                                                         className="btn btn-outline-primary w-100 mt-2"
                                                     >
-                                                        Move from Cart
+                                                        Add to Wishlist
                                                     </button>
                                                 </div>
                                             </div>
@@ -188,7 +194,7 @@ export const CartPage = () => {
                                     {Array.isArray(address) && address.length === 0
                                         ? (<p className='border border-subtle-dark border-2 p-2'>No address added.</p>)
                                         : (address.map((addr) => (
-                                            <div key={addr.id} className='mb-3'>
+                                            <div key={addr.id} className='d-flex mb-3 gap-3'>
                                                 <input type='checkbox' checked={selectedAddresses.includes(addr.id)} onChange={() => {
                                                     if(selectedAddresses.includes(addr.id)){
                                                       setSelectedAddresses(selectedAddresses.filter(id => id !== addr.id))  
@@ -196,12 +202,17 @@ export const CartPage = () => {
                                                         setSelectedAddresses([...selectedAddresses, addr.id])
                                                     }
                                                 }} />
-                                                <div>{addr.name}</div>
-                                                <div>{addr.address}</div>
-                                                <button className='btn btn-outline-danger' onClick={() => {
+                                                <div className='w-100'>
+                                                    <p className='m-0'><span className='fw-bold'>{addr.name}</span></p>
+                                                    <p className='m-0'><span className='fw-bold'>email:</span> {addr.email}</p>
+                                                    <p className='m-0'><span className='fw-bold'>contact:</span> {addr.phone}</p>
+                                                    <p className='m-0'><span className='fw-bold'>Delivery address:</span> {addr.address}</p>
+                                                <button className='btn btn-outline-danger mt-2' onClick={() => {
                                                     setAddress(address.filter(addr => !selectedAddresses.includes(addr.id)))
                                                     setSelectedAddresses([])
-                                                }} disabled={selectedAddresses.length === 0}>Delete Address</button>
+                                                }} disabled={selectedAddresses.length === 0}>Delete Address
+                                                </button>
+                                                </div>
                                             </div>
                                         )))
                                     }
@@ -210,6 +221,14 @@ export const CartPage = () => {
                                             <div>
                                                 <label className='form-label'>Name: </label>
                                                 <input className='form-control' type='text' name='name' value={addrForm.name} onChange={handleAddressChange} />
+                                            </div>
+                                            <div>
+                                                <label className='form-label'>Email: </label>
+                                                <input className='form-control' type='email' name='email' value={addrForm.email} onChange={handleAddressChange} />
+                                            </div>
+                                            <div>
+                                                <label className='form-label'>Phone: </label>
+                                                <input className='form-control' type='text' name='phone' value={addrForm.phone} onChange={handleAddressChange} />
                                             </div>
                                             <div>
                                                 <label className='form-label'>Address: </label>

@@ -64,7 +64,7 @@ export function PriceRangeBar({selectedRange, setSelectedRange, priceOptions}) {
           <span className="fw-semibold text-dark">
             {selectedOption?.label} ({selectedOption?.range})
           </span>
-        </div>
+        </div>  
       </div> */}
     </div>
   )
