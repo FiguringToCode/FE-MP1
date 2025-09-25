@@ -9,7 +9,8 @@ export const CartPage = () => {
     const { cartBtn, setCartBtn, globalProducts, removeFromCart, quantity, setQuantity, addToWishlist, address, setAddress} = useContext(ProductContext)
     
     const [isLoading, setIsLoading] = useState(false)
-    const [edit, setEdit] = useState(false)
+    const [addAddress, setAddAddress] = useState(false)
+    const [editId, setEditId] = useState(null)
     const [selectedAddresses, setSelectedAddresses] = useState([])
     const [showConfirmImg, setShowConfirmImg] = useState(false)
     
@@ -34,16 +35,23 @@ export const CartPage = () => {
         e.preventDefault()
 
         const newAddress = {
-            id: Date.now(),
+            ...addrForm,
+            id: editId ? editId : Date.now(),
             name: addrForm.name,
             email: addrForm.email,
             phone: addrForm.phone,
             address: addrForm.address
         }
 
-        setAddress([...address, newAddress])
-        console.log("New address added: ", newAddress)
-        console.log(address)
+        if(editId){
+            setAddress(address.map(a => a.id === editId ? newAddress: a))
+            setEditId(null)
+        } else {
+            setAddress([...address, newAddress])
+        }
+
+        // console.log("New address added: ", newAddress)
+        // console.log(address)
 
         setAddrForm({
             name: "",
@@ -51,6 +59,7 @@ export const CartPage = () => {
             phone: "",
             address: ""
         })
+        setAddAddress(false)
     }
 
     const handlePlaceOrder = async () => {
@@ -196,7 +205,7 @@ export const CartPage = () => {
 
                                         {/* Shipping Address */}
                                         <div className='mb-4 px-3'>
-                                            {Array.isArray(address) && address.length === 0
+                                            {Array.isArray(address) && address.length === 0 && edit
                                                 ? (<p className='border border-subtle-dark border-2 p-2'>No address added.</p>)
                                                 : (address.map((addr) => (
                                                     <div key={addr.id} className='d-flex mb-3 gap-3'>
@@ -217,11 +226,18 @@ export const CartPage = () => {
                                                             setSelectedAddresses([])
                                                         }} disabled={selectedAddresses.length === 0}>Delete Address
                                                         </button>
+                                                        <button className='btn btn-outline-primary mt-2 mx-2' onClick={() => {
+                                                            setEditId(addr.id)
+                                                            setAddrForm({...addr})
+                                                            setAddAddress(true)
+                                                        }}>
+                                                            Edit
+                                                        </button>
                                                         </div>
                                                     </div>
                                                 )))
                                             }
-                                            {edit ? (
+                                            {addAddress ? (
                                                 <form onSubmit={handleAddressSubmit}>
                                                     <div>
                                                         <label className='form-label'>Name: </label>
@@ -243,7 +259,7 @@ export const CartPage = () => {
                                                 </form>
                                             ) : null}
 
-                                            <button className='btn btn-outline-primary my-2' onClick={() => setEdit(!edit)}>{edit ? "Done" : "Add Address"}</button>
+                                            <button className='btn btn-outline-primary my-2' onClick={() => setAddAddress(!addAddress)}>{addAddress ? "Done" : "Add Address"}</button>
                                         </div>
                                         
 

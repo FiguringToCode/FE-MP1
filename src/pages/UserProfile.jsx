@@ -11,7 +11,7 @@ export function UserProfile() {
     <>
       <Header />
       {
-        address.length > 0 ? address.map(address => (
+        address.length > 0 ? (
 
           <div
             className="container-fluid py-4 pages-bg"
@@ -36,9 +36,9 @@ export function UserProfile() {
                         />
                       </div>
                       <h2 className="card-title mb-1">
-                        {address.name}
+                        {address[0].name}
                       </h2>
-                      <p className="text-muted mb-3">{address.email}</p>
+                      <p className="text-muted mb-3">{address[0].email}</p>
                     </div>
                   </div>
                 </div>
@@ -56,27 +56,21 @@ export function UserProfile() {
                     <div className="card-body">
                       <div className="row g-3">
                         <div className="col-md-6">
-                          <label className="form-label fs-5 fw-semibold">
-                            Name:
-                          </label>
+                          <label className="form-label fs-5 fw-semibold">Name: </label>
                             <span className="mx-2 fs-5">
-                              {address.name}
+                              {address[0].name}
                             </span>
                         </div>
                         <div className="col-md-6">
-                          <label className="form-label fs-5 fw-semibold">
-                            Email
-                          </label>
+                          <label className="form-label fs-5 fw-semibold">Email: </label>
                             <span className="mx-2 fs-5">
-                              {address.email}
+                              {address[0].email}
                             </span>
                         </div>
                         <div className="col-md-6">
-                          <label className="form-label fs-5 fw-semibold">
-                            Phone
-                          </label>
+                          <label className="form-label fs-5 fw-semibold">Phone: </label>
                             <span className="mx-2 fs-5">
-                              {address.phone}
+                              {address[0].phone}
                             </span>
                         </div>
                       </div>
@@ -91,18 +85,20 @@ export function UserProfile() {
                         Address Information
                       </h5>
                     </div>
-                    <div className="card-body">
-                      <div className="row g-3">
-                        <div className="col-12">
-                          <label className="form-label fs-5 fw-semibold">
-                            Street Address
-                          </label>
-                          <span className="mx-2 fs-5">
-                              {address.address}
-                          </span>
+                    {
+                      address.map(address => (
+                        <div className="card-body">
+                          <div className="row g-3">
+                            <div className="col-12">
+                              <label className="form-label fs-5 fw-semibold">Delivery Address : </label>
+                              <span className="mx-2 fs-5">
+                                  {address.address}
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      ))
+                    }
                   </div>
                 </div>
               </div>
@@ -110,7 +106,7 @@ export function UserProfile() {
           </div>
 
 
-        )) : 
+        ) : 
 
         (<div className="container text-center">
           <img src='/img3.png' className='img-fluid py-4 w-50' />
