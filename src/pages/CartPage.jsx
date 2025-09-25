@@ -205,7 +205,7 @@ export const CartPage = () => {
 
                                         {/* Shipping Address */}
                                         <div className='mb-4 px-3'>
-                                            {Array.isArray(address) && address.length === 0 && edit
+                                            {Array.isArray(address) && address.length === 0 && editId
                                                 ? (<p className='border border-subtle-dark border-2 p-2'>No address added.</p>)
                                                 : (address.map((addr) => (
                                                     <div key={addr.id} className='d-flex mb-3 gap-3'>
