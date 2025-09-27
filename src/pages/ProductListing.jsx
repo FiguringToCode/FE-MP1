@@ -65,8 +65,8 @@ export const ProductListing = () => {
         <div className="container">
 
             <div className="row">
-              <div className="col-12 col-md-4 col-lg-3 border-2 border-start border-end border-warning py-4">
-                <div className="d-flex justify-content-between align-items-center my-lg-5">
+              <div className="col-12 col-md-4 col-lg-3 border-2 border-start border-end border-warning py-4 filterContainer">
+                <div className="d-flex justify-content-between align-items-center my-lg-5 filterPosition">
                   <h5>Filter</h5>
                   <button
                     onClick={() => {setSelectedRange(""); setRatingStar("");}}
@@ -75,7 +75,7 @@ export const ProductListing = () => {
                   </button>
                 </div>
 
-                <div className="my-lg-5">
+                <div className="my-lg-5 priceRangePosition">
                   <PriceRangeBar
                     selectedRange={selectedRange}
                     setSelectedRange={setSelectedRange}
@@ -83,7 +83,7 @@ export const ProductListing = () => {
                   />
                 </div>
 
-                <div className="my-lg-5">
+                <div className="my-lg-5 ratingPosition">
                   <h5>Ratings</h5>
                   <div className="py-2 ps-3">
                     <input type="radio" name="rating" value={"4"} onClick={() => setRatingStar("4")} />

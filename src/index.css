@@ -109,6 +109,29 @@ button:focus-visible {
   .img-lar-ht {
     height: 200px;
   }
+
+  .filterContainer {
+    position: sticky;
+  }
+
+  .filterPosition {
+    position: fixed;
+    width: 300px;
+  }
+
+  .priceRangePosition {
+    position: fixed;
+    top: 180px;
+    left: 114px;
+    width: 300px;
+  }
+
+  .ratingPosition {
+    position: fixed;
+    top: 380px;
+    left: 114px;
+    width: 300px;
+  }
 }
 
 @media (max-width: 600px) {
